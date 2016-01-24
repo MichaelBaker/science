@@ -1,6 +1,16 @@
-import React     from 'react';
-import ReactDOM  from 'react-dom';
-import Science   from 'components/science.es6';
-import DataStore from 'data-store.es6';
+import React               from 'react';
+import ReactDOM            from 'react-dom';
+import Science             from 'components/science.es6';
+import { createDataStore } from 'data-store.es6';
 
-ReactDOM.render(React.createElement(Science, { dataStore: new DataStore() }), document.getElementById('main'));
+let { store, actions } = createDataStore();
+
+let render = () => {
+    ReactDOM.render(
+        React.createElement(Science, { actions: actions, data: store.getState() }),
+        document.getElementById('main')
+    );
+};
+
+render();
+store.subscribe(render);

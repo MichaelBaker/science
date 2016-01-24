@@ -11,7 +11,7 @@ class ObservationView extends React.Component {
 
     render() {
         return e('div', { style: this.style() },
-                e('h2', {}, "Observations")
+            e('h2', {}, "Observations")
         );
     }
 }

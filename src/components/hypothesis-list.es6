@@ -10,14 +10,14 @@ class HypothesisList extends React.Component {
         };
     }
 
-    renderHypothesis(hypothesis) {
-        return e('div', { key: hypothesis }, hypothesis)
+    renderHypothesis(hypothesis, i) {
+        return e('div', { key: i }, hypothesis);
     }
 
     render() {
         return e('div', { style: this.style() },
-                 e('h2', {}, 'Hypotheses'),
-                 e('ul', {}, _.map(this.props.hypotheses, this.renderHypothesis.bind(this)))
+            e('h2', { onClick: () => this.props.addHypothesis('hello') }, 'Hypotheses'),
+            e('ul', {}, this.props.hypotheses.map(this.renderHypothesis.bind(this)))
         );
     }
 }
