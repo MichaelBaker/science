@@ -1,3 +1,4 @@
+import _     from 'lodash';
 import React from 'react';
 import { e } from 'functions/react.es6';
 
@@ -9,9 +10,14 @@ class HypothesisList extends React.Component {
         };
     }
 
+    renderHypothesis(hypothesis) {
+        return e('div', { key: hypothesis }, hypothesis)
+    }
+
     render() {
         return e('div', { style: this.style() },
-            e('h2', {}, 'Hypotheses')
+                 e('h2', {}, 'Hypotheses'),
+                 e('ul', {}, _.map(this.props.hypotheses, this.renderHypothesis.bind(this)))
         );
     }
 }

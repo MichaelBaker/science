@@ -11,9 +11,10 @@ class Science extends React.Component {
     }
 
     render() {
+        let problem = this.props.dataStore.getProblem('Problem 1');
         return e('div', { style: this.style() },
-            e(ObservationView),
-            e(HypothesisList)
+                e(ObservationView),
+                e(HypothesisList, { hypotheses: problem.hypotheses || [] })
         );
     }
 }
