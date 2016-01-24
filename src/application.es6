@@ -1,5 +1,5 @@
 import React    from 'react'
 import ReactDOM from 'react-dom'
-import View     from 'components/view.es6'
+import Science  from 'components/science.es6'
 
-ReactDOM.render(React.createElement(View), document.getElementById('main'))
+ReactDOM.render(React.createElement(Science), document.getElementById('main'))
