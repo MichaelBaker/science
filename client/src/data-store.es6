@@ -6,8 +6,12 @@ let I = Immutable.fromJS;
 
 export class DataStore {
     static default() {
+      const textObservations = _.range(20).map((i) => {
+        return { id: i, type: 'text', content: `This is box #${i}` }
+      })
+
       return new DataStore(
-        I({ observations: [] })
+        I({ observations: textObservations })
       )
     }
 

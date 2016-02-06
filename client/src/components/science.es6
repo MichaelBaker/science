@@ -16,7 +16,7 @@ export default class Science extends React.Component {
     return (
       <div style={this.style()}>
         <h1>Board</h1>
-        <ObservationView observations={this.props.data.observations} />
+        <ObservationView observations={this.props.data.get('observations')} />
       </div>
     )
   }

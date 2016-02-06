@@ -1,13 +1,16 @@
-import React from  'react'
-import Radium from 'radium'
-import Text  from  'components/observations/text.es6'
-import _     from  'lodash'
+import React, { PropTypes } from 'react'
+import Radium               from 'radium'
+import Text                 from 'components/observations/text.es6'
+import _                    from 'lodash'
 
 @Radium
 export default class ObservationView extends React.Component {
-  render() {
-    const boxes = _.map(_.range(20), (i) => <Text key={i} />)
+  static PropTypes = {
+    observations: PropTypes.array.isRequired,
+  };
 
+  render() {
+    const boxes = this.props.observations.map(o => <Text key={o.get('id')} content={o.get('content')} />)
     return (
       <div style={[ContainerStyle]}>
         {boxes}

@@ -19,6 +19,7 @@ function collect(connect, monitor) {
 @Radium
 export default class Text extends React.Component {
   static propTypes = {
+    content:           PropTypes.string.isRequired,
     connectDragSource: PropTypes.func.isRequired,
     isDragging:        PropTypes.bool.isRequired,
   };
@@ -27,7 +28,7 @@ export default class Text extends React.Component {
     const { connectDragSource, isDragging } = this.props
     return connectDragSource(
       <span style={[Style, { background: isDragging ? 'red' : 'green'}]}>
-        "This is a text block"
+        {this.props.content}
       </span>
     )
   }

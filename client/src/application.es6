@@ -7,7 +7,7 @@ let { store, actions } = createDataStore()
 
 let render = () => {
   ReactDOM.render(
-    React.createElement(Science, { actions: actions, data: store.getState() }),
+    React.createElement(Science, { actions: actions, data: store.getState().state }),
     document.getElementById('main')
   );
 };
