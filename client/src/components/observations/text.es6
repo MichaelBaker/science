@@ -4,7 +4,7 @@ import { DragSource }       from 'react-dnd'
 
 const dropSpec = {
   beginDrag(props) {
-    return { key: props.key }
+    return { id: props.id }
   }
 }
 
@@ -12,6 +12,7 @@ function collect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
     isDragging:        monitor.isDragging(),
+    candidatePosition: monitor.getClientOffset(),
   }
 }
 
@@ -19,16 +20,18 @@ function collect(connect, monitor) {
 @Radium
 export default class Text extends React.Component {
   static propTypes = {
+    id:                PropTypes.number.isRequired,
     content:           PropTypes.string.isRequired,
     connectDragSource: PropTypes.func.isRequired,
     isDragging:        PropTypes.bool.isRequired,
+    candidatePosition: PropTypes.object,
   };
 
   render() {
     const { connectDragSource, isDragging } = this.props
     return connectDragSource(
-      <span style={[Style, { background: isDragging ? 'red' : 'green'}]}>
-        {this.props.content}
+      <span style={[Style, { background: isDragging ? 'red' : 'green' }]}>
+        #{this.props.id}: {this.props.content}
       </span>
     )
   }
