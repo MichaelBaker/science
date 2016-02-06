@@ -20,7 +20,10 @@ module.exports = {
                 test:    /\.es6$/,
                 exclude: /node_modules/,
                 loader:  'babel',
-                query:   { presets: ['es2015'] }
+                query:   {
+                  plugins: ['babel-plugin-transform-decorators-legacy'],
+                  presets: ['es2015', 'stage-1']
+                }
             }
         ]
     }

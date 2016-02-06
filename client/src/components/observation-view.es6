@@ -1,7 +1,11 @@
-import React from 'react';
-import { e } from 'functions/react.es6';
+import React from  'react'
+import Radium from 'radium'
+import { e } from  'functions/react.es6'
+import Text  from  'components/observations/text.es6'
+import _     from  'lodash'
 
-class ObservationView extends React.Component {
+@Radium
+export default class ObservationView extends React.Component {
   style() {
     return {
       background: 'blue',
@@ -10,10 +14,14 @@ class ObservationView extends React.Component {
   }
 
   render() {
-    return e('div', { style: this.style() },
-      e('h2', {}, "Observations")
+    return e('div', {
+        style: [this.style()],
+      },
+      e('div', {
+          style: [{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }]
+        },
+        _.map(_.range(20), (i) => e(Text, { key: i })),
+      )
     )
   }
 }
-
-export default ObservationView;

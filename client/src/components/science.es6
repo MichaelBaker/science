@@ -1,7 +1,10 @@
-import React           from 'react';
-import { e }           from 'functions/react.es6';
-import ObservationView from 'components/observation-view.es6';
+import React               from 'react'
+import HTML5Backend        from 'react-dnd-html5-backend'
+import { DragDropContext } from 'react-dnd'
+import { e }               from 'functions/react.es6'
+import ObservationView     from 'components/observation-view.es6'
 
+@DragDropContext(HTML5Backend)
 class Science extends React.Component {
   style() {
     return {
