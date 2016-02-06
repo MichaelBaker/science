@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import Radium               from 'radium'
 import { DragSource }       from 'react-dnd'
-import { e }                from 'functions/react.es6'
 
 const dropSpec = {
   beginDrag(props) {
@@ -27,10 +26,9 @@ export default class Text extends React.Component {
   render() {
     const { connectDragSource, isDragging } = this.props
     return connectDragSource(
-      e('span',
-        { style: [Style, { background: isDragging ? 'red' : 'green'}] },
+      <span style={[Style, { background: isDragging ? 'red' : 'green'}]}>
         "This is a text block"
-      )
+      </span>
     )
   }
 }

@@ -22,7 +22,7 @@ module.exports = {
                 loader:  'babel',
                 query:   {
                   plugins: ['babel-plugin-transform-decorators-legacy'],
-                  presets: ['es2015', 'stage-1']
+                  presets: ['es2015', 'stage-1', 'react']
                 }
             }
         ]
