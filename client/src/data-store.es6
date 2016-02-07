@@ -18,20 +18,14 @@ function def() {
 
 function reducer(state = def(), action) {
   if (action.type === Actions.MoveObservation) {
-    const targetObs = state.get('observations').find(o => o.get('id') === action.observationId)
-    if (targetObs.get('order') === action.newPosition) return state
+    const { newOrder, oldOrder, observationId } = action
+    const otherObs  = state.get('observations').filter(o => o.get('id') !== observationId)
+    const targetObs = state.get('observations').filter(o => o.get('id') === observationId)
+    const obsBefore = otherObs.take(newOrder)
+    const obsAfter  = otherObs.skip(newOrder)
+    const newObs    = obsBefore.concat(targetObs).concat(obsAfter)
 
-    return state.updateIn(['observations'], (os) => {
-      return os.map((o) => {
-        if (o.get('id') === action.observationId) {
-          return o.set('order', action.newPosition)
-        } else if (o.get('order') >= action.newPosition) {
-          return o.update('order', p => p + 1)
-        } else {
-          return o
-        }
-      })
-    })
+    return state.set('observations', newObs.map((o, i) => o.set('order', i)))
   } else {
     return state
   }
@@ -39,6 +33,6 @@ function reducer(state = def(), action) {
 
 export function createDataStore() {
   let store   = createStore(reducer)
-  let actions = { moveObservation: (oid, position) => store.dispatch({ type: Actions.MoveObservation, observationId: oid, newPosition: position }) }
+  let actions = { moveObservation: (observationId, oldOrder, newOrder) => store.dispatch({ type: Actions.MoveObservation, observationId, oldOrder, newOrder }) }
   return { store: store, actions: actions }
 };
