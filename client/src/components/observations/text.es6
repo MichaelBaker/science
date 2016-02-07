@@ -4,7 +4,7 @@ import { DragSource }       from 'react-dnd'
 
 const dropSpec = {
   beginDrag(props) {
-    return { id: props.id }
+    return { id: props.id, order: props.order }
   }
 }
 
@@ -21,6 +21,10 @@ function collect(connect, monitor) {
 export default class Text extends React.Component {
   static propTypes = {
     id:                PropTypes.number.isRequired,
+    order:             PropTypes.number.isRequired,
+    width:             PropTypes.number.isRequired,
+    height:            PropTypes.number.isRequired,
+    margin:            PropTypes.number.isRequired,
     content:           PropTypes.string.isRequired,
     connectDragSource: PropTypes.func.isRequired,
     isDragging:        PropTypes.bool.isRequired,
@@ -29,8 +33,10 @@ export default class Text extends React.Component {
 
   render() {
     const { connectDragSource, isDragging } = this.props
+    const style = Style(this.props.width, this.props.height, this.props.margin)
+
     return connectDragSource(
-      <span style={[Style, { background: isDragging ? 'red' : 'green' }]}>
+      <span style={[style, { background: isDragging ? 'red' : 'green' }]}>
         #{this.props.id}: {this.props.content}
       </span>
     )
@@ -38,9 +44,11 @@ export default class Text extends React.Component {
 }
 
 
-const Style = {
-  flex:       '0 0 auto',
-  width:      '250px',
-  height:     '200px',
-  margin:     '10px',
+function Style(width, height, margin) {
+  return {
+    flex:       '0 0 auto',
+    width:      width,
+    height:     height,
+    margin:     margin,
+  }
 }
