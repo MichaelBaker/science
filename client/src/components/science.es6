@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import HTML5Backend         from 'react-dnd-html5-backend'
 import { DragDropContext }  from 'react-dnd'
 import ObservationView      from 'components/observation-view.es6'
+import ObservationDump      from 'components/observation-dump.es6'
 
 @DragDropContext(HTML5Backend)
 export default class Science extends React.Component {
@@ -20,6 +21,7 @@ export default class Science extends React.Component {
   render() {
     return (
       <div style={this.style()}>
+        <ObservationDump addObservation={this.props.actions.addObservation} />
         <h1>Board</h1>
         <ObservationView
           moveObservation = {this.props.actions.moveObservation}
