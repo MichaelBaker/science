@@ -1,80 +1,100 @@
-import React from 'react'
-import Immutable from 'immutable'
+import React, { PropTypes } from 'react'
+import Radium               from 'radium'
 
-export default React.createClass({
+@Radium
+export default class ObservationDump extends React.Component {
+  static PropTypes = {
+    addObservation: PropTypes.func.isRequired,
+    observations:   PropTypes.array.isRequired,
+  };
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props)
+    this.state = {
       collectingObservation : false,
       currentObservation    : null,
-      observations          : [
-        'haha', 'hehe'
-      ]
     }
-  },
+  }
 
   onKeyUp(evt) {
     this.receiveKey(evt.keyIdentifier)
-  },
+  }
 
   componentDidMount() {
-    window.addEventListener('keyup', this.onKeyUp)
-  },
+    window.addEventListener('keyup', this.onKeyUp.bind(this))
+  }
 
   receiveKey(lastKey) {
     const alreadyCollecting = this.state.collectingObservation
 
     switch (lastKey) {
-
       case 'U+004E': // 'n'
-        if (!alreadyCollecting) this.setState({
-          collectingObservation : true,
-          currentObservation    : '',
-        })
-        break;
-
+        if (alreadyCollecting) return
+        this.setState({ collectingObservation: true, currentObservation: '',})
+        break
       case 'Enter':
-        const newObservations = Immutable.fromJS(this.state.observations).push(this.state.currentObservation).toArray()
-        this.setState({
-          collectingObservation : false,
-          currentObservation    : null,
-          observations          : newObservations
-        })
-        break;
-
+        if (!alreadyCollecting) return
+        const content = this.state.currentObservation
+        this.setState({ collectingObservation: false, currentObservation: null })
+        this.props.addObservation(content)
+        break
       default:
-        break;
+        break
     }
-  },
-
-  observations() {
-    return this.state.observations.map((obs) => {
-      return <div key={obs}>{obs}</div>
-    })
-  },
+  }
 
   handleTextChange(e) {
-    this.setState({currentObservation: e.target.value})
-  },
+    this.setState({ currentObservation: e.target.value })
+  }
 
   observationInput() {
     return (
       <input
-        ref='myInput'
-        type='text'
         autoFocus
-        placeholder='Say something...'
-        value={this.state.currentObservation}
-        onChange={this.handleTextChange}></input>
+        ref         = 'myInput'
+        type        = 'text'
+        placeholder = 'Say something...'
+        value       = {this.state.currentObservation}
+        onChange    = {this.handleTextChange.bind(this)}
+        style       = {[InputStyle]}
+      />
     )
-  },
+  }
 
   render() {
+    const visibility = this.state.collectingObservation ? {} : { display: 'none' }
     return (
-      <div>
-        {this.state.collectingObservation && this.observationInput()}
-        {this.observations()}
+      <div style={[ContainerStyle, visibility]}>
+        <div style={[AlignmentStyle]} />
+        <div style={[AlignmentStyle, { display: 'flex', flexDirection: 'column' }]}>
+          <div style={[AlignmentStyle]} />
+          {this.state.collectingObservation && this.observationInput()}
+          <div style={[AlignmentStyle]} />
+        </div>
+        <div style={[AlignmentStyle]} />
       </div>
     )
   }
-})
+}
+
+const ContainerStyle = {
+  position: 'fixed',
+  display:  'flex',
+  top:      0,
+  bottom:   0,
+  left:     0,
+  right:    0,
+}
+
+const AlignmentStyle = {
+  flex: '1 1',
+}
+
+const InputStyle = {
+  flex:         '1 1',
+  fontSize:     48,
+  textAlign:    'center',
+  outline:      'none',
+  borderRadius: '4px',
+  boxShadow:    '2px 2px 2px gray',
+}

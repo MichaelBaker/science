@@ -52,7 +52,7 @@ function ContainerStyle(width) {
   return {
     display:        'flex',
     flexWrap:       'wrap',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     flex:           '1 1',
     margin:         'auto',
     width:          width,
